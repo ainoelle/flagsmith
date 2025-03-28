@@ -256,13 +256,13 @@ elif "DJANGO_DB_NAME" in os.environ:
             else get_numbered_env_vars_with_prefix("DJANGO_DB_REPLICA_ENDPOINT_")
         )
         NUM_DB_REPLICAS = len(DJANGO_DB_REPLICA_ENDPOINTS)
-        for i, db_url in enumerate(DJANGO_DB_REPLICA_ENDPOINTS, start=1):
+        for i, endpoint in enumerate(DJANGO_DB_REPLICA_ENDPOINTS, start=1):
             DATABASES[f"replica_{i}"] = {
                 "ENGINE": "django.db.backends.postgresql",
                 "NAME": os.environ["DJANGO_DB_NAME"],
                 "USER": os.environ["DJANGO_DB_USER"],
                 "PASSWORD": os.environ["DJANGO_DB_PASSWORD"],
-                "HOST": os.environ["DJANGO_DB_REPLICA_ENDPOINT"],
+                "HOST": endpoint,
                 "PORT": os.environ["DJANGO_DB_PORT"],
                 "CONN_MAX_AGE": DJANGO_DB_CONN_MAX_AGE,
             }
